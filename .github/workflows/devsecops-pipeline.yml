@@ -15,11 +15,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ejecutar Semgrep (SAST)
-        uses: semgrep/semgrep-action@v1
         # El pipeline continuará para generar el reporte completo
         continue-on-error: true
-        with:
-          config: p/ci
+        run: |
+          python3 -m pip install --quiet semgrep
+          semgrep --config p/ci . || true
 
   sca_scan:
     name: Análisis de Composición / Dependencias (SCA)
